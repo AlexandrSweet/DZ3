@@ -24,12 +24,12 @@ namespace BusinessLayer.DataProviderProfilerService
             var RawSqlQueryLeadTime = new Stopwatch();            
 
             RawSqlQueryLeadTime.Start();
-            var resaultSqlMethod = _dbContext.Employees.FromSqlRaw("SELECT * FROM Employees").ToList();
+            _dbContext.Employees.FromSqlRaw("SELECT * FROM Employees").ToList();
             RawSqlQueryLeadTime.Stop();
             leadTime.Add("RawSqlQueryLeadTime", RawSqlQueryLeadTime.ElapsedMilliseconds.ToString());
 
             LinqMethodLeadTime.Start();
-            var resaultLinqMethod = _dbContext.Employees.Include(e => e.HiringHistories).ThenInclude(a => a.Achievements).ToListAsync();
+            _dbContext.Employees.Include(e => e.HiringHistories).ThenInclude(a => a.Achievements).ToList();
             LinqMethodLeadTime.Stop();
             leadTime.Add("LinqMethodLeadTime", LinqMethodLeadTime.ElapsedMilliseconds.ToString());
 
